@@ -1508,9 +1508,6 @@ void Stage_Tick(void)
 		{
 			//FntPrint("%d", stage.song_step);
 
-
-
-
 			if (stage.middlescroll)
 				arrowposx = -78;
 			else
