@@ -250,9 +250,6 @@ typedef struct
 		StageState_Play, //Game is playing as normal
 		StageState_Dead,       //Start BREAK animation and reading extra data from CD
 		StageState_DeadLoad,   //Wait for said data to be read
-		StageState_DeadDrop,   //Mic drop
-		StageState_DeadRetry,  //Retry prompt
-		StageState_DeadDecide, //Decided
 	} state;
 	
 	u8 note_swap;

@@ -20,6 +20,7 @@ enum
 	Dad_ArcMain_Down,
 	Dad_ArcMain_Up,
 	Dad_ArcMain_Right,
+	Dad_ArcMain_Scared,
 	
 	Dad_Arc_Max,
 };
@@ -55,10 +56,14 @@ static const CharFrame char_dad_frame[] = {
 	
 	{Dad_ArcMain_Right, {  0,   0, 183, 113}, { 55, 113}}, //10 right 1
 	{Dad_ArcMain_Right, {  0, 113, 182, 111}, { 56, 111}}, //11 right 2
+
+	{Dad_ArcMain_Scared, {  0,   0, 179, 111}, { 56, 111}}, //6 down 1
+	{Dad_ArcMain_Scared, {  0, 111, 180, 110}, { 56, 110}}, //7 down 2
 };
 
 static const Animation char_dad_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0,  1,  2,  3, ASCR_BACK, 0}}, //CharAnim_Idle
+	{2, (const u8[]){ 12,  13, ASCR_BACK, 0}},   //CharAnim_Scared
 	{2, (const u8[]){ 4,  5, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 6,  7, ASCR_BACK, 0}},         //CharAnim_Down
@@ -88,6 +93,9 @@ void Char_Dad_Tick(Character *character)
 {
 	Char_Dad *this = (Char_Dad*)character;
 	
+	if (stage.song_step == 1295)
+		character->set_anim(character, CharAnim_Scared);
+
 	//Perform idle dance
 	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0)
 		Character_PerformIdle(character);
@@ -137,8 +145,8 @@ Character *Char_Dad_New(fixed_t x, fixed_t y)
 	this->character.health_i = 1;
 	
 	this->character.focus_x = FIXED_DEC(65,1);
-	this->character.focus_y = FIXED_DEC(-115,1);
-	this->character.focus_zoom = FIXED_DEC(1,1);
+	this->character.focus_y = FIXED_DEC(-49,1);
+	this->character.focus_zoom = FIXED_DEC(14,10);
 	
 	//Load art
 	this->arc_main = IO_Read("\\CHAR\\DAD.ARC;1");
@@ -150,6 +158,7 @@ Character *Char_Dad_New(fixed_t x, fixed_t y)
 		"down.tim",  //Dad_ArcMain_Down
 		"up.tim",    //Dad_ArcMain_Up
 		"right.tim", //Dad_ArcMain_Right
+		"scared.tim", //Dad_ArcMain_Right
 		NULL
 	};
 	IO_Data *arc_ptr = this->arc_ptr;

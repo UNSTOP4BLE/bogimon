@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Defines the ISO project -->
-<iso_project image_name="funkin.bin" cue_sheet="funkin.cue" no_xa="0">
+<iso_project image_name="Boogie-Man-PSX.bin" cue_sheet="Boogie-Man-PSX.cue" no_xa="0">
 	<!-- Data track -->
 	<track type="data">
 		<!-- Identifiers -->
@@ -46,14 +46,15 @@
 				<file name = "back.arc" type = "data" source = "iso/week1/back.arc"/>
 				
 				<!-- Bopeebo charts -->
+				<file name = "1.1e.cht" type = "data" source = "iso/chart/Boogie-man-hard.json.cht"/>
 				<file name = "1.1n.cht" type = "data" source = "iso/chart/Boogie-man-hard.json.cht"/>
+				<file name = "1.1h.cht" type = "data" source = "iso/chart/Boogie-man-hard.json.cht"/>
 			</dir>
 
 			<!-- Character assets -->
 			<dir name = "char">
 				<!-- Boyfriend assets -->
 				<file name = "bf.arc" type = "data" source = "iso/bf/main.arc"/>
-				<file name = "bfdead.arc" type = "data" source = "iso/bf/dead.arc"/>
 								
 				<!-- Girlfriend assets -->
 				<file name = "gf.arc" type = "data" source = "iso/gf/main.arc"/>

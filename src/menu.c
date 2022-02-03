@@ -218,24 +218,6 @@ static void Menu_DrawBack(boolean flash, s32 scroll, u8 r0, u8 g0, u8 b0, u8 r1,
 
 static void Menu_DifficultySelector(s32 x, s32 y)
 {
-	//Change difficulty
-	if (menu.next_page == menu.page && Trans_Idle())
-	{
-		if (pad_state.press & PAD_LEFT)
-		{
-			if (menu.page_param.stage.diff > StageDiff_Easy)
-				menu.page_param.stage.diff--;
-			else
-				menu.page_param.stage.diff = StageDiff_Hard;
-		}
-		if (pad_state.press & PAD_RIGHT)
-		{
-			if (menu.page_param.stage.diff < StageDiff_Hard)
-				menu.page_param.stage.diff++;
-			else
-				menu.page_param.stage.diff = StageDiff_Easy;
-		}
-	}
 	
 	//Draw difficulty arrows
 	static const RECT arrow_src[2][2] = {
@@ -535,7 +517,7 @@ void Menu_Tick(void)
 			static const char *menu_options[] = {
 				"STORY MODE",
 				"FREEPLAY",
-				"MODS",
+				"CREDITS",
 				"OPTIONS",
 				#ifdef PSXF_NETWORK
 					"JOIN SERVER",
@@ -554,7 +536,7 @@ void Menu_Tick(void)
 			
 			//Draw version identification
 			menu.font_bold.draw(&menu.font_bold,
-				"PSXFUNKIN BY CUCKYDEV",
+				"PSXBOOGIE BY UNSTOPABLE",
 				16,
 				SCREEN_HEIGHT - 32,
 				FontAlign_Left
@@ -675,14 +657,7 @@ void Menu_Tick(void)
 				const char *name;
 				const char *tracks[3];
 			} menu_options[] = {
-				{NULL, StageId_1_4, "TUTORIAL", {"TUTORIAL", NULL, NULL}},
-				{"1", StageId_1_1, "DADDY DEAREST", {"BOPEEBO", "FRESH", "DADBATTLE"}},
-				{"2", StageId_2_1, "SPOOKY MONTH", {"SPOOKEEZ", "SOUTH", "MONSTER"}},
-				{"3", StageId_3_1, "PICO", {"PICO", "PHILLY NICE", "BLAMMED"}},
-				{"4", StageId_4_1, "MOMMY MUST MURDER", {"SATIN PANTIES", "HIGH", "MILF"}},
-				{"5", StageId_5_1, "RED SNOW", {"COCOA", "EGGNOG", "WINTER HORRORLAND"}},
-				{"6", StageId_6_1, "HATING SIMULATOR", {"SENPAI", "ROSES", "THORNS"}},
-				{"7", StageId_7_1, "TANKMAN", {"UGH", "GUNS", "STRESS"}},
+				{"1", StageId_1_1, "THERE IS A BOOGIE MAN", {"BOOGIE MAN"}},
 			};
 			
 			//Initialize page
@@ -806,28 +781,7 @@ void Menu_Tick(void)
 				const char *text;
 			} menu_options[] = {
 				//{StageId_4_4, 0xFFFC96D7, "TEST"},
-				{StageId_1_4, 0xFF9271FD, "TUTORIAL"},
-				{StageId_1_1, 0xFF9271FD, "BOPEEBO"},
-				{StageId_1_2, 0xFF9271FD, "FRESH"},
-				{StageId_1_3, 0xFF9271FD, "DADBATTLE"},
-				{StageId_2_1, 0xFF223344, "SPOOKEEZ"},
-				{StageId_2_2, 0xFF223344, "SOUTH"},
-				{StageId_2_3, 0xFF223344, "MONSTER"},
-				{StageId_3_1, 0xFF941653, "PICO"},
-				{StageId_3_2, 0xFF941653, "PHILLY NICE"},
-				{StageId_3_3, 0xFF941653, "BLAMMED"},
-				{StageId_4_1, 0xFFFC96D7, "SATIN PANTIES"},
-				{StageId_4_2, 0xFFFC96D7, "HIGH"},
-				{StageId_4_3, 0xFFFC96D7, "MILF"},
-				{StageId_5_1, 0xFFA0D1FF, "COCOA"},
-				{StageId_5_2, 0xFFA0D1FF, "EGGNOG"},
-				{StageId_5_3, 0xFFA0D1FF, "WINTER HORRORLAND"},
-				{StageId_6_1, 0xFFFF78BF, "SENPAI"},
-				{StageId_6_2, 0xFFFF78BF, "ROSES"},
-				{StageId_6_3, 0xFFFF78BF, "THORNS"},
-				{StageId_7_1, 0xFFF6B604, "UGH"},
-				{StageId_7_2, 0xFFF6B604, "GUNS"},
-				{StageId_7_3, 0xFFF6B604, "STRESS"},
+				{StageId_1_1, 0xFF9271FD, "BOOGIE MAN"},
 			};
 			
 			//Initialize page
@@ -937,10 +891,22 @@ void Menu_Tick(void)
 				const char *text;
 				boolean difficulty;
 			} menu_options[] = {
-				{StageId_Kapi_1, "VS KAPI", false},
-				{StageId_Clwn_1, "VS TRICKY", true},
-				{StageId_Clwn_4, "   EXPURGATION", false},
-				{StageId_2_4,    "CLUCKED", false},
+				{StageId_Clwn_2, "	OG BOOGIEMAN DEVS", false},
+				{StageId_Clwn_2, "JUSTJAZZZ", false},
+				{StageId_Clwn_2, "KIVRO", false},
+				{StageId_Clwn_2, "USHEERR", false},
+				{StageId_Clwn_2, "JUST A ROBOT IDK", false},
+				{StageId_Clwn_2, "HOSYTAA", false},
+				{StageId_Clwn_2, "", false},
+				{StageId_Kapi_1, "	PORT DEV", false},
+				{StageId_Kapi_2, "UNSTOPABLE", false},	
+				{StageId_Clwn_2, "", false},
+				{StageId_Kapi_1, "	PORT SPECIAL THANKS", false},
+				{StageId_Kapi_2, "MR RUMBLE ROSES", false},	
+				{StageId_Clwn_2, "", false},
+				{StageId_Clwn_1, "	PLAYTESTING", false},
+				{StageId_Clwn_1, "JOHN PAUL", false},
+				{StageId_Clwn_1, "UNSTOPABLE", false},
 			};
 			
 			//Initialize page
@@ -952,7 +918,7 @@ void Menu_Tick(void)
 			
 			//Draw page label
 			menu.font_bold.draw(&menu.font_bold,
-				"MODS",
+				"CREDITS",
 				16,
 				SCREEN_HEIGHT - 32,
 				FontAlign_Left
@@ -979,17 +945,6 @@ void Menu_Tick(void)
 						menu.select++;
 					else
 						menu.select = 0;
-				}
-				
-				//Select option if cross is pressed
-				if (pad_state.press & (PAD_START | PAD_CROSS))
-				{
-					menu.next_page = MenuPage_Stage;
-					menu.page_param.stage.id = menu_options[menu.select].stage;
-					menu.page_param.stage.story = true;
-					if (!menu_options[menu.select].difficulty)
-						menu.page_param.stage.diff = StageDiff_Hard;
-					Trans_Start();
 				}
 				
 				//Return to main menu if circle is pressed

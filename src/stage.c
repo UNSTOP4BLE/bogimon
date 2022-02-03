@@ -25,7 +25,7 @@
 //Stage constants
 //#define STAGE_NOHUD //Disable the HUD
 
-#define STAGE_FREECAM //Freecam
+//#define STAGE_FREECAM //Freecam
 
 //normal note x
 static const fixed_t note_x[8] = {
@@ -701,21 +701,21 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
 	//Check if we should use 'dying' frame
 	s8 dying;
 	if (ox < 0)
-		dying = (health >= 18000) * 24;
+		dying = (health >= 18000) * 50;
 	else
-		dying = (health <= 2000) * 24;
+		dying = (health <= 2000) * 50;
 	
 	//Get src and dst
 	fixed_t hx = (128 << FIXED_SHIFT) * (10000 - health) / 10000;
 	RECT src = {
-		(i % 5) * 48 + dying,
-		16 + (i / 5) * 24,
-		24,
-		24
+		(i % 2) * 100 + dying,
+		16 + (i / 2) * 50,
+		50,
+		50
 	};
 	RECT_FIXED dst = {
-		hx + ox * FIXED_DEC(11,1) - FIXED_DEC(12,1),
-		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 12, 1),
+		hx + ox * FIXED_DEC(25,1) - FIXED_DEC(25,1),
+		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 25, 1),
 		src.w << FIXED_SHIFT,
 		src.h << FIXED_SHIFT
 	};
@@ -1506,6 +1506,10 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//FntPrint("%d", stage.song_step);
+
+
+
 
 			if (stage.middlescroll)
 				arrowposx = -78;
@@ -1964,7 +1968,7 @@ void Stage_Tick(void)
 			
 			Stage_FocusCharacter(stage.player, 0);
 			stage.song_time = 0;
-			
+			Audio_PlayXA_Track(XA_GameOver, 0x40, 1, true);
 			stage.state = StageState_DeadLoad;
 		}
 	//Fallthrough
@@ -1982,43 +1986,10 @@ void Stage_Tick(void)
 			if (IO_IsReading() || stage.player->animatable.anim != PlayerAnim_Dead1)
 				break;
 			
-			stage.player->set_anim(stage.player, PlayerAnim_Dead2);
+			stage.player->set_anim(stage.player, PlayerAnim_Dead1);
 			stage.camera.td = FIXED_DEC(25, 1000);
-			stage.state = StageState_DeadDrop;
 			break;
-		}
-		case StageState_DeadDrop:
-		{
-			//Scroll camera and tick player
-			Stage_ScrollCamera();
-			stage.player->tick(stage.player);
-			
-			//Enter next state once mic has been dropped
-			if (stage.player->animatable.anim == PlayerAnim_Dead3)
-			{
-				stage.state = StageState_DeadRetry;
-				Audio_PlayXA_Track(XA_GameOver, 0x40, 1, true);
-			}
-			break;
-		}
-		case StageState_DeadRetry:
-		{
-			//Randomly twitch
-			if (stage.player->animatable.anim == PlayerAnim_Dead3)
-			{
-				if (RandomRange(0, 29) == 0)
-					stage.player->set_anim(stage.player, PlayerAnim_Dead4);
-				if (RandomRange(0, 29) == 0)
-					stage.player->set_anim(stage.player, PlayerAnim_Dead5);
-			}
-			
-			//Scroll camera and tick player
-			Stage_ScrollCamera();
-			stage.player->tick(stage.player);
-			break;
-		}
-		default:
-			break;
+		}		
 	}
 }
 
